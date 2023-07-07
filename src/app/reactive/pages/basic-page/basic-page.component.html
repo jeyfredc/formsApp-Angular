@@ -1,0 +1,122 @@
+<h2>Reactivos: Básicos</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+        <!-- [formGroup]="myForm" es la forma de conectar la instancia de grupo que se creo en el basic-page.component 
+        El ngSubmit puede contener la funcion onSave o tambien puede quedar en un evento onClick en el boton de guardar-->
+        <form [formGroup]="myForm" (ngSubmit)="onSave()" autocomplete="off">
+
+            <!-- Campo de producto -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Producto</label>
+                <div class="col-sm-9">
+<!-- En formControlName pongo lo que quiero capturar en mi formulario, como el name, price y inStorage que corresponden
+a los input de Producto, precio y Existencias respectivamente  -->
+                    <input type="text"
+                           class="form-control"
+                           formControlName="name"
+                           placeholder="Nombre del producto">
+<!-- Primer forma de mostrar errores es utilizando un ngIf por medio de myForm.controls -->
+<!-- Este error es cuando no se ha digitado nada en el campo y es requerido al agregar la validacion
+&& myForm.controls['name'].touched significa que ademas esta validando que el formulario este manipulado,
+en primer momento si solo se da guardar, sin haber modificado nada en el input saldra esta validacion-->                    
+<!-- isValidField('name') -> Reemplazo todo este codigo ->*ngIf="myForm.controls['name'].getError('required') && myForm.controls['name'].touched" -->
+<!-- getFieldError, es una funcion para simplicar la necesidad de usar span por cada error-->
+<!-- Este error es cuando esta validando que minimo el campo debe contener 3 letras-->                    
+<span 
+*ngIf="isValidField('name')"
+                    class="form-text text-danger">
+                       {{getFieldError('name')}}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Campo de producto -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="price"
+                           placeholder="Precio del producto">
+                    <span
+                    *ngIf="isValidField('price')"
+                    class="form-text text-danger">
+                        El precio debe de ser 0 o mayor
+                    </span>
+                </div>
+            </div>
+
+            <!-- Campo de existencias -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Existencias</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="inStorage"
+                           placeholder="Existencias del producto">
+
+                    <span 
+                    *ngIf="isValidField('inStorage')"
+                    class="form-text text-danger">
+                         Las existencias deben de ser 0 o mayor
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit"
+                            class="btn btn-primary float-end"
+                            >
+                        Guardar
+                    </button>
+                </div>
+            </div>
+
+
+
+        </form>
+
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col">
+
+        <span>Valid</span>
+        <!-- Significa que el formulario sea valido es decir que todos los input hayan pasado las validaciones -->
+        <pre>{{ myForm.valid | json }}</pre>
+
+        <span>Pristine</span>
+        <!-- Significa que el formulario no se ha tocado ni manipulado de ninguna manera, si el valor esta en true, significa eso -->
+        <pre>{{ myForm.pristine | json }}</pre>
+
+        <span>Touched</span>
+        <!-- Significa que el formulario se empezo a manipular de alguna forma -->
+        <pre>{{ myForm.touched | json }}</pre>
+
+        <span>Value</span>
+        <!-- Son los valores del formulario en el momento -->
+        <pre>{{ myForm.value | json }}</pre>
+        <span>Precio</span>
+        <!-- valor del precio en el momento -->
+        <pre>{{ myForm.controls['price'].value | json }}</pre>
+        
+        <span>Precio - Errors</span>
+        <pre>{{ myForm.controls['price'].errors | json }}</pre>
+        
+        <span>Producto</span>
+        <!-- valor del producto en el momento -->
+        <pre>{{ myForm.controls['name'].value | json }}</pre>
+        
+        <span>Producto</span>
+        <!-- muestra el error o las propiedades que se van a validar en el momento-->
+        <pre>{{ myForm.controls['name'].errors | json  }}</pre>
+    </div>
+</div>

@@ -8,13 +8,13 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class DynamicPageComponent {
 
-  public myForm: FormGroup= this.fb.group({
-    name:['', [Validators.required, Validators.minLength(3)]],
-    favoriteGames: this.fb.array([
-      ['Metal Gear', Validators.required],
-      ['Death Stranding', Validators.required],
-    ])
-  })
+    public myForm: FormGroup= this.fb.group({
+      name:['', [Validators.required, Validators.minLength(3)]],
+      favoriteGames: this.fb.array([
+        ['Metal Gear', Validators.required],
+        ['Death Stranding', Validators.required],
+      ])
+    })
   /* Este formControl se va a agregar a la parte de agregar favoritos y se hace para ir mandando elementos al arreglo */
   public newFavorite: FormControl = new FormControl('', Validators.required)
 
